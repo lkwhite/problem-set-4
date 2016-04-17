@@ -1,17 +1,17 @@
 ---
 title: "Problem set 4"
-author: "Your name here"
+author: "Laura"
 date: "`r Sys.Date()`"
 ---
 
 # Overview
 
 For this problem set you will need to analyze some ChIP-seq data to
-identify a mystery factor X.
+identify CTCF.
 
 ## Workflow
 
-Create a `run.sh` file that runs the entire workflow (or as much as possible).
+Create a `run.sh` file that runs the entire workflow (or as much as possible). Check.
 
 ### Alignment
 
@@ -46,17 +46,14 @@ $ git push origin gh-pages
 your trackline should look something like this (all on one line):
 
 ```
-track type=bedGraph bigDataUrl="http://<username>.github.io/<repo name>/path/to/bw color=255,0,0 visiblity=full name='chip data' description='chip description'
+track type=bigWig bigDataUrl="http://lkwhite.github.io/problem-set-4/data/output.bw" color=255,0,0 visiblity=full name='chip data' description='unknown tf'
+
 ```
+![yup, made a track](https://github.com/lkwhite/problem-set-4/blob/master/Screen%20Shot%202016-04-17%20at%204.50.25%20PM.png?raw=true)
 
 ### Peak calling
 
 Call peaks from the bedGraph data using MACS2.
-
-```bash
-$ macs2 callpeak -t <BAM file>
-```
-
 
 ### Generate motifs from the peak calls
 
@@ -77,3 +74,5 @@ meme-get-motif -id 1 < meme.txt
 ```
 
 Copy the numeric matrix into the the search box on the tomtom site and report which motif it matches.
+
+![CTCF, finally](https://github.com/lkwhite/problem-set-4/blob/master/data/meme_out/FINALLY.png?raw=true)
