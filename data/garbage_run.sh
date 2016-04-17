@@ -31,9 +31,9 @@ bedtools genomecov -ibam output.bam -bg -g hg19.chrom.sizes > output.bg
 # use Macs2 to call peaks
 macs2 callpeak -t output.bam -f BAM -n factorx
 
-# DIFFERENCE: other script slops 50bp in each direction, but I tried that too so NOPE.
+# CHANGED to slop 50bp in each direction like the other script even though come on
 # slop some 50bp windows for summit searching
-bedtools slop -i factorx_summits.bed -g hg19.chrom.sizes -b 25 > slopped_summits.bed
+bedtools slop -i factorx_summits.bed -g hg19.chrom.sizes -b 50 > slopped_summits.bed
 
 # SAME
 # sample 1000 peaks so that getting reads doesn't take forever
@@ -43,12 +43,12 @@ shuf slopped_summits.bed | head -n 1000 > peaks.rand.1000.bed
 # take the narrow peak file and getfasta to get the reads at the peaks
 bedtools getfasta -fi hg19.chr1.fa -bed  peaks.rand.1000.bed -fo factorx.fa
 
-# CHANGED: maxsize (down 10x) and removed multithreading
+# CHANGED: maxsize (down 10x) and removed nsites and removed  multithreading
 # use meme to find the motifs. remember to tell it it's DNA
 # this takes forever, specify window size to not get garbage out
 # may want to either trim this or start from the summits and awk out a bigger
 # window / either way want about a 50bp window
-meme factorx.fa -dna -maxsize 1000000 -nsites 5 -maxw 20 -minw 8
+meme factorx.fa -dna -maxsize 1000000 -maxw 20 -minw 8
 
 # SAME
 # get the motif
