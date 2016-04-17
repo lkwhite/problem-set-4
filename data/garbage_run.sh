@@ -10,18 +10,18 @@
 
 # SAME
 # unzippage
-gunzip factorx.chr1.fq.gz
-gunzip hg19.chr1.fa.gz
+# gunzip factorx.chr1.fq.gz
+# gunzip hg19.chr1.fa.gz
 
 # SAME
 # make some indices after unzipping. bowtie2-build really hates getting
 # piped an unzipped file for some reason so don't do that.
 bowtie2-build hg19.chr1.fa hg19.chr1
 
-# DIFFERENCE: I get my samtools sort output with > instead of -o
+# CHANGED TO SAME 
 # given the index files already built, run Bowtie alignment for
 # dataset, sort it and output a bam file
-bowtie2 -x hg19.chr1 -U factorx.chr1.fq | samtools sort > output.bam
+bowtie2 -x hg19.chr1 -U factorx.chr1.fq | samtools sort -o output.bam
 
 # DIFFERENCE: I don't give genomecov the chrom.sizes file with -g
 # THIS DIFFERENCE ONLY AFFECTS MAKING THE BIGWIG TRACK, SO NOT THE PROBLEM
